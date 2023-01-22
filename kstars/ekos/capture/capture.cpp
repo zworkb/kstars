@@ -703,6 +703,7 @@ bool Capture::setMount(ISD::Mount *device)
 
     m_captureDeviceAdaptor->getMount()->disconnect(this);
     connect(m_captureDeviceAdaptor->getMount(), &ISD::Mount::newTargetName, this, &Capture::setTargetName);
+    connect(m_captureDeviceAdaptor->getMount(), &ISD::Mount::newTargetObject, this, &Capture::processNewTarget);
 
     m_RotatorControlPanel->setCurrentPierSide(device->pierSide());
     connect(m_captureDeviceAdaptor->getMount(), &ISD::Mount::pierSideChanged, m_RotatorControlPanel.get(),
@@ -3707,6 +3708,26 @@ void Capture::setRotatorReversed(bool toggled)
     m_RotatorControlPanel->ReverseDirectionCheck->setChecked(toggled);
     m_RotatorControlPanel->ReverseDirectionCheck->blockSignals(false);
 
+}
+
+void Capture::processNewTarget(SkyObject &newTarget)
+{
+    //    Q_UNUSED(newCoords)
+    auto state = status();
+    if (state == CAPTURE_IDLE || state == CAPTURE_COMPLETE)
+    {
+        QString sanitized = newTarget.name();
+        if (sanitized != i18n("unnamed"))
+        {
+            // Remove illegal characters that can be problematic
+            sanitized = sanitized.replace( QRegularExpression("\\s|/|\\(|\\)|:|\\*|~|\"" ), "_" )
+                            // Remove any two or more __
+                            .replace( QRegularExpression("_{2,}"), "_")
+                            // Remove any _ at the end
+                            .replace( QRegularExpression("_$"), "");
+            targetNameT->setText(sanitized);
+        }
+    }
 }
 
 void Capture::setTargetName(const QString &name)

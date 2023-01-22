@@ -238,6 +238,14 @@ void Mount::processNumber(INDI::Property prop)
             // Hint: we intentionally do not communicate the target here, since it has been communicated
             // at the beginning of the slew AND we cannot be sure that the position the INDI mount reports
             // when starting to track is exactly that one where the slew went to.
+
+            // FIX: the above-mentioned not communicating target
+            // corrupts plate solving from remote clients
+            // in that plate solving only works for the first slew
+            double maxrad = 1000.0 / Options::zoomFactor();
+            currentObject = KStarsData::Instance()->skyComposite()->objectNearest(&currentCoords, maxrad);
+            if (currentObject != nullptr)
+                emit newTargetObject(*currentObject);
         }
 
         EqCoordPreviousState = nvp->getState();

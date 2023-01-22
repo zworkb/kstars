@@ -266,6 +266,7 @@ class Mount : public ConcreteDevice
          * @param currentCoords exact position where the mount is positioned
          */
         void newTarget(SkyPoint &currentCoords);
+        void newTargetObject(SkyObject &currentObject);
 
         /**
          * @brief The mount has finished the slew to a new target.

@@ -1362,5 +1362,6 @@ class Capture : public QWidget, public Ui::Capture
         bool FilterEnabled {false};
         bool ExpEnabled {false};
         bool TimeStampEnabled {false};
+        void processNewTarget(SkyObject &newTarget);
 };
 }
