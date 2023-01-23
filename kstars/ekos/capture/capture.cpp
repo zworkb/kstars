@@ -3712,7 +3712,6 @@ void Capture::setRotatorReversed(bool toggled)
 
 void Capture::processNewTarget(SkyObject &newTarget)
 {
-    //    Q_UNUSED(newCoords)
     auto state = status();
     if (state == CAPTURE_IDLE || state == CAPTURE_COMPLETE)
     {

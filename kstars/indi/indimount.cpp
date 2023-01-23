@@ -244,8 +244,10 @@ void Mount::processNumber(INDI::Property prop)
             // in that plate solving only works for the first slew
             double maxrad = 1000.0 / Options::zoomFactor();
             currentObject = KStarsData::Instance()->skyComposite()->objectNearest(&currentCoords, maxrad);
-            if (currentObject != nullptr)
-                emit newTargetObject(*currentObject);
+            if (currentObject != nullptr) {
+                emit newTargetObject(*currentObject);  //triggers Capture::processNewTarget
+                emit newTarget(currentCoords);  //triggers Align::setTarget
+            }
         }
 
         EqCoordPreviousState = nvp->getState();
