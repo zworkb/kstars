@@ -497,6 +497,11 @@
          <whatsthis>Set magnitude limit for supernovae to be shown on the skymap.</whatsthis>
          <default>16</default>
       </entry>
+      <entry name="LimitSupernovaeByZoom" type="Bool">
+         <label>Limit Supernovae by zoom limit</label>
+         <whatsthis>Limit Supernovae by zoom limit.</whatsthis>
+         <default>true</default>
+      </entry>
       <entry name="ShowSupernovaAlerts" type="Bool">
          <label>Show supernova alerts?</label>
          <whatsthis>Toggle supernova alerts.</whatsthis>

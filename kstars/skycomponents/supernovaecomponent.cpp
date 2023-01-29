@@ -195,7 +195,7 @@ void SupernovaeComponent::draw(SkyPainter *skyp)
             continue;
 
         //Do not draw if mag>maglim
-        if (mag > maglim)
+        if (mag > maglim && Options::limitSupernovaeByZoom()    )
             continue;
         skyp->drawSupernova(sup);
     }
